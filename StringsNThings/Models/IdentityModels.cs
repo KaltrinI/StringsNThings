@@ -20,6 +20,8 @@ namespace StringsNThings.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
+        public DbSet<Instrument> Instruments {get;set;}
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

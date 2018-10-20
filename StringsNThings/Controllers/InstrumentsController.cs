@@ -3,31 +3,33 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using StringsNThings.Models;
+using StringsNThings.Services;
 
 namespace StringsNThings.Controllers
 {
     public class InstrumentsController : Controller
     {
-        private InstrumentDBContext db = new InstrumentDBContext();
-
+        private ApplicationDbContext db = new ApplicationDbContext();
+        private IInstrumentServices instrumentService = new InstrumentServices();
         // GET: Instruments
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.OtherInstruments.ToList());
+            return View(await instrumentService.GetAllInstruments());
         }
 
         // GET: Instruments/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instrument instrument = db.OtherInstruments.Find(id);
+            Instrument instrument = await instrumentService.GetInstrumentDetails(id.Value); 
             if (instrument == null)
             {
                 return HttpNotFound();
@@ -46,12 +48,11 @@ namespace StringsNThings.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
         {
             if (ModelState.IsValid)
             {
-                db.OtherInstruments.Add(instrument);
-                db.SaveChanges();
+                await instrumentService.AddInstrument(instrument);
                 return RedirectToAction("Index");
             }
 
@@ -59,13 +60,13 @@ namespace StringsNThings.Controllers
         }
 
         // GET: Instruments/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instrument instrument = db.OtherInstruments.Find(id);
+            Instrument instrument = await instrumentService.GetInstrumentDetails(id.Value); 
             if (instrument == null)
             {
                 return HttpNotFound();
@@ -78,25 +79,24 @@ namespace StringsNThings.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(instrument).State = EntityState.Modified;
-                db.SaveChanges();
+                await instrumentService.ModifyInstrumentInfo(instrument);
                 return RedirectToAction("Index");
             }
             return View(instrument);
         }
 
         // GET: Instruments/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instrument instrument = db.OtherInstruments.Find(id);
+            Instrument instrument = await instrumentService.GetInstrumentDetails(id.Value);
             if (instrument == null)
             {
                 return HttpNotFound();
@@ -107,11 +107,9 @@ namespace StringsNThings.Controllers
         // POST: Instruments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Instrument instrument = db.OtherInstruments.Find(id);
-            db.OtherInstruments.Remove(instrument);
-            db.SaveChanges();
+            Instrument instrument = await instrumentService.GetInstrumentDetails(id); 
             return RedirectToAction("Index");
         }
 

@@ -6,11 +6,11 @@ namespace StringsNThings.Services
 {
     public interface IInstrumentServices
     {
-        List<Instrument> GetAllInstruments();
-        void AddInstrument(Instrument instrument);
-        Task<Instrument> GetInstrumentDetails(int id, string type);
-        Task<List<Instrument>> GetInstrumentsByType(string type);
-        void DeleteInstrument(Instrument instrument);
-        void ModifyInstrumentInfo(Instrument instrument);
+        Task<IEnumerable<Instrument>> GetAllInstruments();
+        Task AddInstrument(Instrument instrument);
+        Task<Instrument> GetInstrumentDetails(int id);
+        Task<IEnumerable<Instrument>> GetInstrumentsByType(string type);
+        Task DeleteInstrument(Instrument instrument);
+        Task ModifyInstrumentInfo(Instrument instrument);
     }
 }

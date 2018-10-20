@@ -9,74 +9,42 @@ namespace StringsNThings.Services
 {
     public class InstrumentServices : IInstrumentServices
     {
-        private InstrumentDBContext dBContext;
 
-        public void AddInstrument(Instrument instrument)
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        public async Task AddInstrument(Instrument instrument)
         {
-            var table = GetInstrumentTable(instrument.Category);
-            table.Add(instrument);
-            dBContext.SaveChanges();
+            db.Instruments.Add(instrument);
+            await db.SaveChangesAsync();
         }
 
-        
-        public void DeleteInstrument(Instrument instrument)
+        public async Task DeleteInstrument(Instrument instrument)
         {
-            var table = GetInstrumentTable(instrument.Category);
-            table.Remove(instrument);
-            dBContext.SaveChanges();
+            db.Instruments.Remove(instrument);
+            await db.SaveChangesAsync();
         }
 
-        public List<Instrument> GetAllInstruments()
+        public async Task<IEnumerable<Instrument>> GetAllInstruments()
         {
-            var instruments = dBContext.OtherInstruments.ToList();
-            instruments.AddRange(dBContext.BrassInstruments.ToList());
-            instruments.AddRange(dBContext.WoodwindInstruments.ToList());
-            instruments.AddRange(dBContext.KeyboardInstruments.ToList());
-            instruments.AddRange(dBContext.PercussionInstruments.ToList());
-            instruments.AddRange(dBContext.StringInstruments.ToList());
-            return instruments.OrderBy(x => x.Name).ToList();
+            return await db.Instruments.ToListAsync();
         }
 
-        public async Task<Instrument> GetInstrumentDetails(int id, string type)
+        public async Task<Instrument> GetInstrumentDetails(int id)
         {
-            var table = await GetInstrumentTable(type).ToListAsync();
-            var list = new List<Instrument>();
-            table.ForEach(x => list.Add((Instrument)x));
-            return list.First(a => a.Id == id);
+           return await db.Instruments.FindAsync(id);
         }
 
-        public async Task<List<Instrument>> GetInstrumentsByType(string type)
+  
+        public async Task<IEnumerable<Instrument>> GetInstrumentsByType(string type)
         {
-            
-            var table = await GetInstrumentTable(type).ToListAsync();
-            var list = new List<Instrument>();
-            table.ForEach(x => list.Add((Instrument)x));
-            return list;   
+            var instruments= await db.Instruments.ToListAsync();
+            return instruments.Where(instrument => instrument.Category == type);
         }
 
-        public void ModifyInstrumentInfo(Instrument instrument)
+        public async Task ModifyInstrumentInfo(Instrument instrument)
         {
-            throw new NotImplementedException();
+            db.Entry(instrument).State = EntityState.Modified;
+            await db.SaveChangesAsync();
         }
-
-        private DbSet GetInstrumentTable(string category)
-        {
-            switch (category)
-            {
-                case nameof(BrassInstrument):
-                    return dBContext.BrassInstruments;
-                case nameof(WoodwindInstrument):
-                    return dBContext.WoodwindInstruments;
-                case nameof(KeyboardInstrument):
-                    return dBContext.KeyboardInstruments;
-                case nameof(PercussionInstrument):
-                    return dBContext.PercussionInstruments;
-                case nameof(StringInstrument):
-                    return dBContext.StringInstruments;
-                default:
-                    return dBContext.OtherInstruments;
-            }
-        }
-
     }
 }
