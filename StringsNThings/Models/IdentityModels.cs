@@ -22,6 +22,8 @@ namespace StringsNThings.Models
     {
 
         public DbSet<Instrument> Instruments {get;set;}
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<CartItem> Carts { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
