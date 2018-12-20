@@ -15,7 +15,7 @@ namespace StringsNThings.Controllers
         private IPaymentService paymentService = new PaymentsService();
 
         // GET: Payment
-
+        [Authorize(Roles = "User,Administrator")]
         public async Task<ActionResult> ProcessPayment(Instrument i, int? userB)
         {
             if(i == null || userB == null)
@@ -25,6 +25,7 @@ namespace StringsNThings.Controllers
             await paymentService.ProcessPayment(i, userB.Value);
             return View();
         }
+        [Authorize(Roles = "User,Administrator")]
 
         public async Task<ActionResult> ViewCart(int? UserId)
         {
@@ -38,6 +39,7 @@ namespace StringsNThings.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User,Administrator")]
         public async Task<ActionResult> DiscardCart(Instrument i, int? id)
         {
             await paymentService.DiscardCart(i, id.Value);
@@ -46,6 +48,7 @@ namespace StringsNThings.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User,Administrator")]
         public async Task<ActionResult> Checkout (int? UserId)
         {
             if (UserId == null)
