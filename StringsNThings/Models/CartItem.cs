@@ -8,6 +8,6 @@ namespace StringsNThings.Models
     public class CartItem
     {
         public Instrument instrument { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

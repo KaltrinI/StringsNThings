@@ -7,8 +7,8 @@ namespace StringsNThings.Models
 {
     public class Transaction
     {
-        public int UserS { get; set; }
-        public int UserB { get; set; }
+        public string UserS { get; set; }
+        public string UserB { get; set; }
         public int InstrumentId { get; set; }
         public double Amount { get; set; }
     }

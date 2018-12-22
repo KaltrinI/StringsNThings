@@ -9,9 +9,9 @@ namespace StringsNThings.Services
 {
     interface IPaymentService
     {
-        Task ProcessPayment(Instrument i, int userB);
-        Task<IEnumerable<CartItem>> ViewCart(int UserId);
-        Task Checkout(int UserId);
-        Task DiscardCart(Instrument i, int UserId);
+        Task ProcessPayment(Instrument i, string userB);
+        Task<IEnumerable<CartItem>> ViewCart(string UserId);
+        Task Checkout(string UserId);
+        Task DiscardCart(Instrument i, string UserId);
     }
 }

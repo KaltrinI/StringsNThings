@@ -11,7 +11,7 @@ namespace StringsNThings.Services
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public async Task ProcessPayment(Instrument i, int userB)
+        public async Task ProcessPayment(Instrument i, string userB)
         {
             var transaction = new Transaction
             {
@@ -29,7 +29,7 @@ namespace StringsNThings.Services
                 await db.SaveChangesAsync();
             }
         }
-        public async Task<IEnumerable<CartItem>> ViewCart(int UserId)
+        public async Task<IEnumerable<CartItem>> ViewCart(string UserId)
         {
 
             var list = db.Carts.Where(x => x.UserId == UserId).ToArray();
@@ -38,7 +38,7 @@ namespace StringsNThings.Services
         }
 
 
-        public async Task DiscardCart(Instrument i,int id)
+        public async Task DiscardCart(Instrument i,string id)
         {
             var cart = db.Carts.Where(x => x.UserId == id && x.instrument == i).FirstOrDefault();
 
@@ -47,7 +47,7 @@ namespace StringsNThings.Services
         }
 
 
-        public async Task Checkout(int UserId)
+        public async Task Checkout(string UserId)
         {
             var list = db.Carts.Where(x => x.UserId == UserId).ToArray();
             foreach (var item in list)

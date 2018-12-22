@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using StringsNThings.Models;
 using StringsNThings.Services;
@@ -14,7 +9,6 @@ namespace StringsNThings.Controllers
 {
     public class InstrumentsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
         private IInstrumentServices instrumentService = new InstrumentServices();
         // GET: Instruments
         public async Task<ActionResult> Index()
@@ -38,7 +32,7 @@ namespace StringsNThings.Controllers
         }
 
         // GET: Instruments/Create
-        [Authorize(Roles =["User","Administrator"])]
+        [Authorize(Roles ="User,Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -64,7 +58,9 @@ namespace StringsNThings.Controllers
         [Authorize(Roles ="User,Administrator")]
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null)
+            
+
+            if (id == null || !await AccessCheck())
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -84,7 +80,8 @@ namespace StringsNThings.Controllers
         [Authorize(Roles = "User,Administrator")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
         {
-            if (ModelState.IsValid)
+           
+            if (ModelState.IsValid|| !await AccessCheck())
             {
                 await instrumentService.ModifyInstrumentInfo(instrument);
                 return RedirectToAction("Index");
@@ -96,7 +93,8 @@ namespace StringsNThings.Controllers
         [Authorize(Roles = "User,Administrator")]
         public async Task<ActionResult> Delete(int? id)
         {
-            if (id == null)
+            
+            if (id == null || !await AccessCheck())
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -105,6 +103,7 @@ namespace StringsNThings.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(instrument);
         }
 
@@ -114,17 +113,17 @@ namespace StringsNThings.Controllers
         [Authorize(Roles = "User,Administrator")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Instrument instrument = await instrumentService.GetInstrumentDetails(id); 
+            Instrument instrument = await instrumentService.GetInstrumentDetails(id);
+            if(!await AccessCheck(instrument))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        private async Task<bool> AccessCheck(Instrument i=null)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            if (i.UserId != User.Identity.Name)
+                return false;
+            return true;
         }
     }
 }
