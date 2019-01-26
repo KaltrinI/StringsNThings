@@ -32,7 +32,7 @@ namespace StringsNThings.Controllers
         }
 
         // GET: Instruments/Create
-        [Authorize(Roles ="Administrator")]
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -42,7 +42,7 @@ namespace StringsNThings.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Name,Category,Description,Price")] Instrument instrument)
         {
@@ -56,7 +56,7 @@ namespace StringsNThings.Controllers
         }
 
         // GET: Instruments/Edit/5
-        [Authorize(Roles ="Administrator")]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             
@@ -77,7 +77,7 @@ namespace StringsNThings.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
         {
            
@@ -90,7 +90,7 @@ namespace StringsNThings.Controllers
         }
 
         // GET: Instruments/Delete/5
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             
@@ -110,7 +110,7 @@ namespace StringsNThings.Controllers
         // POST: Instruments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Instrument instrument = await instrumentService.GetInstrumentDetails(id);

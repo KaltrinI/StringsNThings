@@ -3,10 +3,22 @@ namespace StringsNThings.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.CartItems",
+                c => new
+                    {
+                        CartId = c.Int(nullable: false, identity: true),
+                        UserId = c.String(),
+                        instrument_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.CartId)
+                .ForeignKey("dbo.Instruments", t => t.instrument_Id)
+                .Index(t => t.instrument_Id);
+            
             CreateTable(
                 "dbo.Instruments",
                 c => new
@@ -16,6 +28,7 @@ namespace StringsNThings.Migrations
                         Category = c.String(),
                         Description = c.String(),
                         Price = c.Double(nullable: false),
+                        Quantity = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -41,6 +54,17 @@ namespace StringsNThings.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.Transactions",
+                c => new
+                    {
+                        TransactionId = c.Int(nullable: false, identity: true),
+                        ClientId = c.String(),
+                        InstrumentId = c.Int(nullable: false),
+                        Amount = c.Double(nullable: false),
+                    })
+                .PrimaryKey(t => t.TransactionId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -95,18 +119,22 @@ namespace StringsNThings.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.CartItems", "instrument_Id", "dbo.Instruments");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.CartItems", new[] { "instrument_Id" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Transactions");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Instruments");
+            DropTable("dbo.CartItems");
         }
     }
 }
