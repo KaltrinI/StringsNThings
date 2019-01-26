@@ -14,7 +14,7 @@ namespace StringsNThings.Controllers
         [Authorize(Roles = "User,Administrator")]
         public async Task<ActionResult> ProcessPayment(Instrument i, string userB)
         {
-            if(i == null || userB == null || !await AccessCheck())
+            if(i == null || userB == null )
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -26,7 +26,7 @@ namespace StringsNThings.Controllers
 
         public async Task<ActionResult> ViewCart(string UserId)
         {
-            if(UserId == null || !await AccessCheck())
+            if(UserId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -34,15 +34,28 @@ namespace StringsNThings.Controllers
             return View(list);
         }
 
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "User,Administrator")]
-        public async Task<ActionResult> DiscardCart(Instrument i, string id)
+        public async Task<ActionResult> DiscardCartItem(Instrument i, string id)
         {
-            if(!await AccessCheck())
+            if(i==null || id==null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            await paymentService.DiscardCart(i, id);
+            await paymentService.DiscardCartItem(i, id);
+            return View();
+        }
+
+
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User,Administrator")]
+        public async Task<ActionResult> EmptyCart(string id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            await paymentService.EmptyCart(id);
             return View();
         }
 
@@ -51,19 +64,13 @@ namespace StringsNThings.Controllers
         [Authorize(Roles = "User,Administrator")]
         public async Task<ActionResult> Checkout (string UserId)
         {
-            if (UserId == null || !await AccessCheck())
+            if (UserId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             await paymentService.Checkout(UserId);
             return View();
         }
-
-        private async Task<bool> AccessCheck(Instrument i = null)
-        {
-            if (i.UserId != User.Identity.Name)
-                return false;
-            return true;
-        }
+        
     }
 }

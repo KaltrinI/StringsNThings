@@ -12,6 +12,7 @@ namespace StringsNThings.Services
         Task ProcessPayment(Instrument i, string userB);
         Task<IEnumerable<CartItem>> ViewCart(string UserId);
         Task Checkout(string UserId);
-        Task DiscardCart(Instrument i, string UserId);
+        Task DiscardCartItem(Instrument i, string UserId);
+        Task EmptyCart(string id);
     }
 }
