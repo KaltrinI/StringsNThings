@@ -15,8 +15,7 @@ namespace StringsNThings.Services
         {
             var transaction = new Transaction
             {
-                UserB = userB,
-                UserS = i.UserId,
+                ClientId=userB,
                 Amount = i.Price,
                 InstrumentId = i.Id
             };
@@ -31,14 +30,12 @@ namespace StringsNThings.Services
         }
         public async Task<IEnumerable<CartItem>> ViewCart(string UserId)
         {
-
             var list = db.Carts.Where(x => x.UserId == UserId).ToArray();
-
             return list;
         }
 
 
-        public async Task DiscardCart(Instrument i,string id)
+        public async Task DiscardCartItem(Instrument i,string id)
         {
             var cart = db.Carts.Where(x => x.UserId == id && x.instrument == i).FirstOrDefault();
 
@@ -54,6 +51,9 @@ namespace StringsNThings.Services
                 await ProcessPayment(item.instrument, UserId);
         }
 
-       
+        public async Task EmptyCart(string id)
+        {
+            db.Carts.RemoveRange(db.Carts.Where(x => x.UserId == id));
+        }
     }
 }

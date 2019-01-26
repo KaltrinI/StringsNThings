@@ -32,7 +32,7 @@ namespace StringsNThings.Controllers
         }
 
         // GET: Instruments/Create
-        [Authorize(Roles ="User,Administrator")]
+        [Authorize(Roles ="Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -42,8 +42,9 @@ namespace StringsNThings.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Category,Description,Price")] Instrument instrument)
         {
             if (ModelState.IsValid)
             {
@@ -55,12 +56,11 @@ namespace StringsNThings.Controllers
         }
 
         // GET: Instruments/Edit/5
-        [Authorize(Roles ="User,Administrator")]
+        [Authorize(Roles ="Administrator")]
         public async Task<ActionResult> Edit(int? id)
         {
             
-
-            if (id == null || !await AccessCheck())
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -77,11 +77,11 @@ namespace StringsNThings.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User,Administrator")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
         {
            
-            if (ModelState.IsValid|| !await AccessCheck())
+            if (ModelState.IsValid)
             {
                 await instrumentService.ModifyInstrumentInfo(instrument);
                 return RedirectToAction("Index");
@@ -90,11 +90,11 @@ namespace StringsNThings.Controllers
         }
 
         // GET: Instruments/Delete/5
-        [Authorize(Roles = "User,Administrator")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(int? id)
         {
             
-            if (id == null || !await AccessCheck())
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -110,20 +110,13 @@ namespace StringsNThings.Controllers
         // POST: Instruments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User,Administrator")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Instrument instrument = await instrumentService.GetInstrumentDetails(id);
-            if(!await AccessCheck(instrument))
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             return RedirectToAction("Index");
         }
 
-        private async Task<bool> AccessCheck(Instrument i=null)
-        {
-            if (i.UserId != User.Identity.Name)
-                return false;
-            return true;
-        }
+       
     }
 }
