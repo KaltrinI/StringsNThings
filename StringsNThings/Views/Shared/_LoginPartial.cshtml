@@ -11,6 +11,11 @@
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
+    <br/>
+    <div>
+        <img src="/Images/cart.png" style="max-width:30px" />
+        <a style="text-decoration:none" href="@Url.Action("ViewCart","Payment",new { UserId = User.Identity.GetUserId()},null)"> My Cart</a>
+   </div>
     }
 }
 else

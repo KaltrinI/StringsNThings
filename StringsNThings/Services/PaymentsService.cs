@@ -19,10 +19,18 @@ namespace StringsNThings.Services
                 Amount = i.Price,
                 InstrumentId = i.Id
             };
-
-            if (db.Instruments.Find(i).Quantity > 0)
+            var cart = new CartItem
             {
-                db.Transactions.Add(transaction);
+                UserId = userB,
+                instrument = i
+
+            };
+
+            if (i.Quantity > 0)
+            {
+
+                db.Carts.Add(cart);
+                //db.Transactions.Add(transaction);
                 db.Instruments.First(ins => ins.Id == i.Id).Quantity--;
 
                 await db.SaveChangesAsync();

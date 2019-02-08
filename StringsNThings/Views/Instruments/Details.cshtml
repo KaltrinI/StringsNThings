@@ -45,6 +45,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @using Microsoft.AspNet.Identity
+    @Html.ActionLink("Add to Cart", "ProcessPayment","Payment", new { id = Model.Id, userB = User.Identity.GetUserId() },null) |
     @Html.ActionLink("Back to List", "Index")
 </p>

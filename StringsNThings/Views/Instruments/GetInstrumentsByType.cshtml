@@ -1,0 +1,21 @@
+﻿@model IEnumerable<StringsNThings.Models.Instrument>
+@{
+    ViewBag.Title = "GetInstrumentsByType";
+}
+<li class="form-inline">
+    @foreach (var item in Model)
+    {
+
+        <div style="border-style:solid; margin:20px">
+
+            <ul>
+                @Html.DisplayFor(modelItem => item.Name)
+            </ul>
+
+            <ul>
+                <img src="@item.Image" style="max-width:200px" />
+            </ul>
+        </div>
+        }
+
+    </li>

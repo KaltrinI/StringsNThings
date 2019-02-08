@@ -4,12 +4,14 @@ using System.Net;
 using System.Web.Mvc;
 using StringsNThings.Models;
 using StringsNThings.Services;
+using System.Collections.Generic;
 
 namespace StringsNThings.Controllers
 {
     public class InstrumentsController : Controller
     {
         private IInstrumentServices instrumentService = new InstrumentServices();
+        private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Instruments
         public async Task<ActionResult> Index()
         {
@@ -44,7 +46,7 @@ namespace StringsNThings.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Category,Description,Price")] Instrument instrument)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Category,Description,Price,Quantity,Image")] Instrument instrument)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +80,7 @@ namespace StringsNThings.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Category,Description,Price")] Instrument instrument)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Category,Description,Price,Quantity,Image")] Instrument instrument)
         {
            
             if (ModelState.IsValid)
@@ -107,13 +109,25 @@ namespace StringsNThings.Controllers
             return View(instrument);
         }
 
+        public async Task<ActionResult> GetInstrumentsByType(string type)
+        {
+            if(type == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            return View(await instrumentService.GetInstrumentsByType(type));
+        }
+      
+
         // POST: Instruments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Instrument instrument = await instrumentService.GetInstrumentDetails(id);
+            Instrument instrument = db.Instruments.Find(id);
+            db.Instruments.Remove(instrument);
             return RedirectToAction("Index");
         }
 

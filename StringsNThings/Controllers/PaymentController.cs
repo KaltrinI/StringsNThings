@@ -9,20 +9,21 @@ namespace StringsNThings.Controllers
     public class PaymentController : Controller
     {
         private IPaymentService paymentService = new PaymentsService();
-        
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         // GET: Payment
-        [Authorize(Roles = "User,Administrator")]
-        public async Task<ActionResult> ProcessPayment(Instrument i, string userB)
+        [Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult> ProcessPayment(int id, string userB)
         {
-            if(i == null || userB == null )
+            if(id == null || userB == null )
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            Instrument i = db.Instruments.Find(id);
             await paymentService.ProcessPayment(i, userB);
-            return View();
+            return RedirectToAction("Index","Instruments");
         }
-        [Authorize(Roles = "User,Administrator")]
+        [Authorize(Roles = "User,Admin")]
 
         public async Task<ActionResult> ViewCart(string UserId)
         {

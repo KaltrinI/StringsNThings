@@ -14,5 +14,10 @@ namespace StringsNThings.Models
         public int CartId { get; set; }
         public Instrument instrument { get; set; }
         public string UserId { get; set; }
+
+        public CartItem()
+        {
+            instrument = new Instrument();
+        }
     }
 }

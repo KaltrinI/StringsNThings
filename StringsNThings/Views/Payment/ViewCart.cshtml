@@ -1,0 +1,17 @@
+﻿@model IEnumerable<StringsNThings.Models.CartItem>
+@{
+    ViewBag.Title = "ViewCart";
+}
+
+<h2>ViewCart</h2>
+<div>
+    @foreach (var item in Model)
+    {
+
+        <div>@item.UserId</div>
+       
+   
+
+    }
+</div>
+
