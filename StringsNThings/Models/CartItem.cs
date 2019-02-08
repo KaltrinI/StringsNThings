@@ -12,12 +12,11 @@ namespace StringsNThings.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CartId { get; set; }
-        public Instrument instrument { get; set; }
+        [ForeignKey("Instrument")]
+        public int InstrumentId { get; set; }
+        public virtual Instrument Instrument { get; set; }
         public string UserId { get; set; }
 
-        public CartItem()
-        {
-            instrument = new Instrument();
-        }
+        
     }
 }

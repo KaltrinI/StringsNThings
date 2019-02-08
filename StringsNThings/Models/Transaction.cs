@@ -13,7 +13,9 @@ namespace StringsNThings.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransactionId { get; set; }
         public string ClientId { get; set; }
-        public int InstrumentId { get; set; }
+        [ForeignKey("Instrument")]
+        public int InstrumendId { get; set; }
+        public virtual Instrument Instrument { get; set; }
         public double Amount { get; set; }
     }
 }

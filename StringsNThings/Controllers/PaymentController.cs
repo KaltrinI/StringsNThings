@@ -19,8 +19,8 @@ namespace StringsNThings.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instrument i = db.Instruments.Find(id);
-            await paymentService.ProcessPayment(i, userB);
+            
+            await paymentService.ProcessPayment(id, userB);
             return RedirectToAction("Index","Instruments");
         }
         [Authorize(Roles = "User,Admin")]

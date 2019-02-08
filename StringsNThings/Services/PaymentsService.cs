@@ -11,30 +11,25 @@ namespace StringsNThings.Services
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public async Task ProcessPayment(Instrument i, string userB)
+        public async Task ProcessPayment(int instrumentId, string userB)
         {
-            var transaction = new Transaction
+
+            var instrument = db.Instruments.First(x => x.Id == instrumentId);
+
+            if (instrument.Quantity > 0)
             {
-                ClientId=userB,
-                Amount = i.Price,
-                InstrumentId = i.Id
-            };
-            var cart = new CartItem
-            {
-                UserId = userB,
-                instrument = i
+                var transaction = new Transaction
+                {
+                    ClientId = userB,
+                    Amount = instrument.Price,
+                    Instrument = instrument
+                };
 
-            };
-
-            if (i.Quantity > 0)
-            {
-
-                db.Carts.Add(cart);
-                //db.Transactions.Add(transaction);
-                db.Instruments.First(ins => ins.Id == i.Id).Quantity--;
-
+                db.Transactions.Add(transaction);
+                db.Carts.Remove(db.Carts.First(x => x.UserId == userB && x.InstrumentId == instrumentId));
                 await db.SaveChangesAsync();
             }
+            
         }
         public async Task<IEnumerable<CartItem>> ViewCart(string UserId)
         {
@@ -45,7 +40,7 @@ namespace StringsNThings.Services
 
         public async Task DiscardCartItem(Instrument i,string id)
         {
-            var cart = db.Carts.Where(x => x.UserId == id && x.instrument == i).FirstOrDefault();
+            var cart = db.Carts.FirstOrDefault(x => x.UserId == id && x.InstrumentId == i.Id);
 
             db.Carts.Remove(cart);
             await db.SaveChangesAsync();
@@ -56,7 +51,7 @@ namespace StringsNThings.Services
         {
             var list = db.Carts.Where(x => x.UserId == UserId).ToArray();
             foreach (var item in list)
-                await ProcessPayment(item.instrument, UserId);
+                await ProcessPayment(item.InstrumentId, UserId);
         }
 
         public async Task EmptyCart(string id)
