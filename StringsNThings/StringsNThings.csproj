@@ -27,7 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -201,9 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902082134321_init.cs" />
-    <Compile Include="Migrations\201902082134321_init.Designer.cs">
-      <DependentUpon>201902082134321_init.cs</DependentUpon>
+    <Compile Include="Migrations\201902091653285_init.cs" />
+    <Compile Include="Migrations\201902091653285_init.Designer.cs">
+      <DependentUpon>201902091653285_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -351,8 +351,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201902082134321_init.resx">
-      <DependentUpon>201902082134321_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902091653285_init.resx">
+      <DependentUpon>201902091653285_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

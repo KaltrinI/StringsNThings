@@ -13,7 +13,7 @@ namespace StringsNThings.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201902082134321_init"; }
+            get { return "201902091653285_init"; }
         }
         
         string IMigrationMetadata.Source
