@@ -11,7 +11,7 @@ namespace StringsNThings.Controllers
     public class InstrumentsController : Controller
     {
         private IInstrumentServices instrumentService = new InstrumentServices();
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
         // GET: Instruments
         public async Task<ActionResult> Index()
         {
@@ -126,8 +126,7 @@ namespace StringsNThings.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Instrument instrument = db.Instruments.Find(id);
-            db.Instruments.Remove(instrument);
+            await instrumentService.DeleteInstrument(await instrumentService.GetInstrumentById(id));
             return RedirectToAction("Index");
         }
 

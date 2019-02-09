@@ -43,7 +43,7 @@
 
             <p>
                 @using Microsoft.AspNet.Identity
-                <button class="btn btn-success">
+                <button class="btn btn-success" onclick="ItemAdded()">
                     @Html.ActionLink("Add to Cart", "AddToCart", "Payment", new { id = Model.Id, userB = User.Identity.GetUserId() }, new { @style = "color:white" })
                 </button>  |
                 <button class="btn btn-success">
@@ -65,3 +65,9 @@
 
     </div>
 </div>
+
+<script>
+    function ItemAdded() {
+        alert("The item has been added to the cart");
+    }
+</script>

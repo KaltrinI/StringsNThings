@@ -20,7 +20,7 @@ namespace StringsNThings.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             await paymentService.AddToCart(id, userB);
-            return RedirectToAction("Index", "Instruments");
+            return Redirect(this.Request.UrlReferrer.AbsolutePath);
 
         }
 

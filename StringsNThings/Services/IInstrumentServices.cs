@@ -12,5 +12,6 @@ namespace StringsNThings.Services
         Task<IEnumerable<Instrument>> GetInstrumentsByType(string type);
         Task DeleteInstrument(Instrument instrument);
         Task ModifyInstrumentInfo(Instrument instrument);
+        Task<Instrument> GetInstrumentById(int id);
     }
 }

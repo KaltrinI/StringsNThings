@@ -29,6 +29,11 @@ namespace StringsNThings.Services
             return await db.Instruments.ToListAsync();
         }
 
+        public async Task<Instrument> GetInstrumentById(int id)
+        {
+            return await db.Instruments.FindAsync(id);
+        }
+
         public async Task<Instrument> GetInstrumentDetails(int id)
         {
            return await db.Instruments.FindAsync(id);

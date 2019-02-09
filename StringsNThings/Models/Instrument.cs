@@ -22,4 +22,6 @@ namespace StringsNThings.Models
         public string Image { get; set; }
         
     }
+
+    public enum InstrumentType {  String, Brass , Keyboard , Percussion};
 }
