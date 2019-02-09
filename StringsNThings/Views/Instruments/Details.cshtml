@@ -4,46 +4,64 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2 class="display-3 text-success">Details</h2>
+<div class="row">
+<div class="col-4">
+    <div class="card">
+        <div class="card-body bg-light">
+            <h4 class="text-secondary">
+                @Html.DisplayFor(model => model.Name)
+            </h4>
+            <hr />
+            <dl class="dl-horizontal">
 
-<div>
-    <h4> @Html.DisplayNameFor(model => model.Name)</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+            </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+            <p>
+                @using Microsoft.AspNet.Identity
+                <button class="btn btn-success">
+                    @Html.ActionLink("Add to Cart", "AddToCart", "Payment", new { id = Model.Id, userB = User.Identity.GetUserId() }, new { @style = "color:white" })
+                </button>  |
+                <button class="btn btn-success">
+                    @Html.ActionLink("Back to List", "Index", null, new { @style = "color:white" })
+                </button>
 
-    </dl>
+            </p>
+        </div>
+    </div>
 </div>
-<p>
-    @using Microsoft.AspNet.Identity
-    @Html.ActionLink("Add to Cart", "AddToCart","Payment", new { id = Model.Id, userB = User.Identity.GetUserId() },null) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="col-3">
+    <div class="card">
+        <div class="card-body bg-light">
+            <img src="@Model.Image" style="height:300px; width:210px" />
+        </div>
+    </div>
+</div>
+    <div class="col-5">
+
+    </div>
+</div>

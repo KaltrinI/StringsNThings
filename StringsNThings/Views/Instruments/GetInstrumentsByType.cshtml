@@ -2,20 +2,37 @@
 @{
     ViewBag.Title = "GetInstrumentsByType";
 }
-<li class="form-inline">
+<ul class="form-inline" style="list-style-type: none">
+
     @foreach (var item in Model)
     {
+        <li>
+            <div class="card m-3 pt-1" style="width:280px; border-width:3px; border-color:skyblue">
 
-        <div style="border-style:solid; margin:20px">
+                <a class="m-auto" href="@Url.Action("Details","Instruments", new{ id = item.Id })">
+                    <img src="@item.Image" class="card-img-top" style="height:300px; width:200px" />
+                </a>
+                <div style="background-color:lightgrey;align-content:center">
+                    <div class="card-body">
+                        <h4 class="card-title text-primary">
+                            @Html.DisplayFor(modelItem => item.Name, new { @class = "display-4 " })
+                        </h4>
+                        <button class="btn btn-primary ">
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @style = "text-decoration:none", @class = "text-white" })
+                        </button>
+                        <p class="pt-2">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "p-2" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            }
+                            @*  @Html.ActionLink("Details", "Details", new { id = item.Id }, new ) *@
 
-            <ul>
-                @Html.DisplayFor(modelItem => item.Name)
-            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
 
-            <ul>
-                <img src="@item.Image" style="max-width:200px" />
-            </ul>
-        </div>
-        }
-
-    </li>
+</ul>

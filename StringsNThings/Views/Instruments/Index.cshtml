@@ -3,45 +3,46 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Strings'n'Things</h2>
-@if (User.IsInRole("Admin"))
-{
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-}
+<div>
+    <h2>Strings'n'Things</h2>
+    @if (User.IsInRole("Admin"))
+    {
+        <p class="btn btn-outline-info pt-2">
+            @Html.ActionLink("Create New", "Create", new { @style = "color:white" })
+        </p>
+    }
     <ul class="form-inline" style="list-style-type: none">
-                
+
         @foreach (var item in Model)
         {
-        <li >
-            <div class="card m-3 pt-1" style="width:280px; border-width:5px; border-color:skyblue">
-                                               
-                <a  class="m-auto" href="@Url.Action("Details","Instruments", new{ id = item.Id })">
-                    <img src="@item.Image" class="card-img-top" style="height:300px; width:200px" />
-                </a>
-                <div style="background-color:lightgrey">
-                    <div class="card-body" style="align-content:center">
-                        <h4 class="card-title">
-                            @Html.DisplayFor(modelItem => item.Name, new { @class = "display-4 " })
-                        </h4>
-                        <button class="btn btn-primary ">
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @style = "text-decoration:none", @class = "text-white" })
-                        </button>
-                        <p>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                            }
-                            @*  @Html.ActionLink("Details", "Details", new { id = item.Id }, new ) *@
+            <li>
+                <div class="card m-3 pt-1" style="width:280px; border-width:3px; border-color:skyblue">
 
-                        </p>
+                    <a class="m-auto" href="@Url.Action("Details","Instruments", new{ id = item.Id })">
+                        <img src="@item.Image" class="card-img-top" style="height:300px; width:200px" />
+                    </a>
+                    <div style="background-color:lightgrey;align-content:center">
+                        <div class="card-body">
+                            <h4 class="card-title text-primary">
+                                @Html.DisplayFor(modelItem => item.Name, new { @class = "display-4 " })
+                            </h4>
+                            <button class="btn btn-primary ">
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @style = "text-decoration:none", @class = "text-white" })
+                            </button>
+                            <p class="pt-2">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class="p-2"})
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                }
+                                @*  @Html.ActionLink("Details", "Details", new { id = item.Id }, new ) *@
+
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </li>
+            </li>
         }
 
     </ul>
+</div>

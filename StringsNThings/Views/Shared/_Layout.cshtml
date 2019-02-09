@@ -11,7 +11,21 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">@Html.ActionLink("All Instruments", "Index", "Instruments")</li>
+            <li class="nav-item">&nbsp;@Html.ActionLink("String", "GetInstrumentsByType", "Instruments", new { type = "String" }, new { @style = "text-decoration:none" })</li>
+            <li class="nav-item">&nbsp;@Html.ActionLink("Brass", "GetInstrumentsByType", "Instruments", new { type = "Brass" }, new { @style = "text-decoration:none" })</li>
+            <li class="nav-item">&nbsp;@Html.ActionLink("Keyboard", "GetInstrumentsByType", "Instruments", new { type = "Keyboard" }, new { @style = "text-decoration:none" })</li>
+            <li class="nav-item">&nbsp;@Html.ActionLink("Percussion", "GetInstrumentsByType", "Instruments", new { type = "Percussion" }, new { @style = "text-decoration:none" })</li>
+
+        </ul>
+        @Html.Partial("_LoginPartial")
+    </nav>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="col-md-2">
                 <div class="navbar-header">
@@ -22,37 +36,48 @@
                         Menu
                     </button>
                     @* @Html.ActionLink("Strings'n'Things", "Index", "Instruments", new { area = "" }, new { @class = "navbar-brand" })
-                    *@
+    *@
+    @*   </div>
+
+                    <div class="navbar-collapse collapse">
+                        <li style="list-style-type:none">@Html.ActionLink("All Instruments", "Index", "Instruments")</li>
+                        <ul class="nav navbar-nav">
+
+                            <li>@Html.ActionLink("String", "GetInstrumentsByType", "Instruments", new { type = "String" }, new { @style = "text-decoration:none" })</li>
+                            <li>@Html.ActionLink("Brass", "GetInstrumentsByType", "Instruments", new { type = "Brass" }, new { @style = "text-decoration:none" })</li>
+                            <li>@Html.ActionLink("Keyboard", "GetInstrumentsByType", "Instruments", new { type = "Keyboard" }, new { @style = "text-decoration:none" })</li>
+                            <li>@Html.ActionLink("Percussion", "GetInstrumentsByType", "Instruments", new { type = "Percussion" }, new { @style = "text-decoration:none" })</li>
+
+
+                        </ul>
+
+                    </div>
                 </div>
+            </div><!--c-->
+            @Html.Partial("_LoginPartial")
+        </div>*@
+    <div>
+        <div class="container body-content" style="background-image:url('../../Images/background.jpg');background-size:cover">
+            @RenderBody()
 
-                <div class="navbar-collapse collapse">
-                    <li style="list-style-type:none">@Html.ActionLink("All Instruments", "Index", "Instruments")</li>
-                    <ul class="nav navbar-nav">
+            <footer style="text-align:center;color:cornflowerblue">
+                <p>&copy; @DateTime.Now.Year - Strings'n'Things</p>
 
-                        <li>@Html.ActionLink("String", "GetInstrumentsByType", "Instruments", new { type = "String" }, new { @style = "text-decoration:none" })</li>
-                        <li>@Html.ActionLink("Brass", "GetInstrumentsByType", "Instruments", new { type = "Brass" }, new { @style = "text-decoration:none" })</li>
-                        <li>@Html.ActionLink("Keyboard", "GetInstrumentsByType", "Instruments", new { type = "Keyboard" }, new { @style = "text-decoration:none" })</li>
-                        <li>@Html.ActionLink("Percussion", "GetInstrumentsByType", "Instruments", new { type = "Percussion" }, new { @style = "text-decoration:none" })</li>
+                <i class=" fa fa-facebook">   </i>
+                <i class="fa fa-twitter">   </i>
+                <i class="fa fa-google-plus">   </i>
+                <i class="fa fa-pinterest">   </i>
+                <i class="fa fa-youtube">   </i>
+
+            </footer>
 
 
-                    </ul>
-
-                </div>
-            </div>
-        </div><!--c-->
-        @Html.Partial("_LoginPartial")
+            <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        
-        @*<footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>*@
-    </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-   
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
