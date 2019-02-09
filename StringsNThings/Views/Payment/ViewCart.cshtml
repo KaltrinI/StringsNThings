@@ -3,15 +3,33 @@
     ViewBag.Title = "ViewCart";
 }
 
-<h2>ViewCart</h2>
-<div>
+<h2>Your Cart</h2>
+<ul>
     @foreach (var item in Model)
     {
+        <h2>@item.Instrument.Name</h2>
+        <img src="
+            @item.Instrument.Image" style="max-width:120px" />
 
-        <div>@item.UserId</div>
-       
-   
+        <div>
+            <label>
+                Price of this instrument
+                <p>@item.Instrument.Price $</p>
+            </label>
+
+        </div>
+
+
+
+        @Html.ActionLink("Buy Item", "ProcessPayment", "Payment", new { id = item.InstrumentId, userB = item.UserId }, null)
+        @Html.ActionLink("Discard this item", "DiscardCartItem", "Payment", new { InstrumentId = item.InstrumentId, userB = item.UserId }, null)
 
     }
-</div>
+
+
+</ul>
+<br />
+@using Microsoft.AspNet.Identity
+@Html.ActionLink("Empty your cart", "EmptyCart", "Payment", new { userB = User.Identity.GetUserId() }, null)
+@Html.ActionLink("Checkout", "Checkout", "Payment", new { userB = User.Identity.GetUserId() }, null)
 

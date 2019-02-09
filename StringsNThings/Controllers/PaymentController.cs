@@ -11,6 +11,19 @@ namespace StringsNThings.Controllers
         private IPaymentService paymentService = new PaymentsService();
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        //GET : AddToCart
+        [Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult> AddToCart(int id, string userB)
+        {
+            if (id == 0 || userB == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            await paymentService.AddToCart(id, userB);
+            return RedirectToAction("Index", "Instruments");
+
+        }
+
         // GET: Payment
         [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult> ProcessPayment(int id, string userB)
@@ -36,41 +49,41 @@ namespace StringsNThings.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User,Administrator")]
-        public async Task<ActionResult> DiscardCartItem(Instrument i, string id)
+        
+        [Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult> DiscardCartItem(int InstrumentId, string userB)
         {
-            if(i==null || id==null)
+            if(InstrumentId == 0 || userB == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            await paymentService.DiscardCartItem(i, id);
-            return View();
+            await paymentService.DiscardCartItem(InstrumentId, userB);
+            return RedirectToAction("Index", "Instruments");
         }
 
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User,Administrator")]
-        public async Task<ActionResult> EmptyCart(string id)
+        
+        [Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult> EmptyCart(string userB)
         {
-            if (id == null)
+            if (userB == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            await paymentService.EmptyCart(id);
-            return View();
+            await paymentService.EmptyCart(userB);
+            return RedirectToAction("Index", "Instruments");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User,Administrator")]
-        public async Task<ActionResult> Checkout (string UserId)
+        [HttpGet]
+        
+        [Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult> Checkout(string userB)
         {
-            if (UserId == null)
+            if (userB == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            await paymentService.Checkout(UserId);
-            return View();
+            await paymentService.Checkout(userB);
+            return RedirectToAction("Index", "Instruments");
         }
         
     }

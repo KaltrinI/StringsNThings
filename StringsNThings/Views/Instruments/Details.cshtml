@@ -7,12 +7,10 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Instrument</h4>
+    <h4> @Html.DisplayNameFor(model => model.Name)</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+        
 
         <dd>
             @Html.DisplayFor(model => model.Name)
@@ -46,6 +44,6 @@
 </div>
 <p>
     @using Microsoft.AspNet.Identity
-    @Html.ActionLink("Add to Cart", "ProcessPayment","Payment", new { id = Model.Id, userB = User.Identity.GetUserId() },null) |
+    @Html.ActionLink("Add to Cart", "AddToCart","Payment", new { id = Model.Id, userB = User.Identity.GetUserId() },null) |
     @Html.ActionLink("Back to List", "Index")
 </p>
