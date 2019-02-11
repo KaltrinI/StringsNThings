@@ -188,6 +188,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\ApplicationRoleManager .cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -204,6 +205,10 @@
     <Compile Include="Migrations\201902091859536_Initial.cs" />
     <Compile Include="Migrations\201902091859536_Initial.Designer.cs">
       <DependentUpon>201902091859536_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111844150_initialMigration.cs" />
+    <Compile Include="Migrations\201902111844150_initialMigration.Designer.cs">
+      <DependentUpon>201902111844150_initialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -353,6 +358,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201902091859536_Initial.resx">
       <DependentUpon>201902091859536_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111844150_initialMigration.resx">
+      <DependentUpon>201902111844150_initialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
