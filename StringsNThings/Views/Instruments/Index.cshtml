@@ -4,10 +4,11 @@
     ViewBag.Title = "Index";
 }
 <div>
-    <h2>Strings'n'Things</h2>
+    
     @if (User.IsInRole("Admin"))
     {
-        <p class="btn btn-outline-info pt-2">
+        <br>
+        <p class="btn btn-light pt-2">
             @Html.ActionLink("Create New", "Create", new { @style = "color:white" })
         </p>
     }

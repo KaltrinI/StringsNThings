@@ -8,23 +8,52 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="bootstrap.css" rel="stylesheet" />
 
+    
 
 </head>
-<body>
-    <nav class="navbar navbar-expand-sm bg-light justify-content-center">
 
+
+
+
+
+<body style="background-image:url('../../Images/proba.jpg');background-repeat:repeat ;background-size:500px">
+    <style>
+        #uniqueid:hover {
+            background-color: lightseagreen;
+            border: 0px solid lightseagreen;
+            border-radius: 5px;
+            padding: 15px;
+            
+        }
+        #uniqueid {
+            font-size: 20px;
+        }
+        body {
+        font-family: Helvetica, sans-serif;
+        }
+    </style>
+
+
+    <nav class="navbar navbar-expand-sm bg-info justify-content-center p-0">
+        <a class="navbar-brand mr-4" href="#">
+            <img src="../../Images/saxx.png" alt="" style="width:80px;">
+            <span style="text-decoration:none;color:white;font-size:30px;"> Strings'n'Things</span>
+        </a>
         <!-- Links -->
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item">@Html.ActionLink("All Instruments", "Index", "Instruments")</li>
-            <li class="nav-item">&nbsp;@Html.ActionLink("String", "GetInstrumentsByType", "Instruments", new { type = "String" }, new { @style = "text-decoration:none" })</li>
-            <li class="nav-item">&nbsp;@Html.ActionLink("Brass", "GetInstrumentsByType", "Instruments", new { type = "Brass" }, new { @style = "text-decoration:none" })</li>
-            <li class="nav-item">&nbsp;@Html.ActionLink("Keyboard", "GetInstrumentsByType", "Instruments", new { type = "Keyboard" }, new { @style = "text-decoration:none" })</li>
-            <li class="nav-item">&nbsp;@Html.ActionLink("Percussion", "GetInstrumentsByType", "Instruments", new { type = "Percussion" }, new { @style = "text-decoration:none" })</li>
+            <li id="uniqueid" class="nav-item mr-4 ">@Html.ActionLink("All Instruments", "Index", "Instruments",null, new { @style = "text-decoration:none", @class = "text-white " })</li>
+            <li id="uniqueid" class="nav-item mr-4">&nbsp;@Html.ActionLink("String", "GetInstrumentsByType", "Instruments", new { type = "String" }, new { @style = "text-decoration:none", @class = "text-white " })</li>
+            <li id="uniqueid" class="nav-item mr-4">&nbsp;@Html.ActionLink("Brass", "GetInstrumentsByType", "Instruments", new { type = "Brass" }, new { @style = "text-decoration:none", @class = "text-white " }) </li>
+            <li id="uniqueid" class="nav-item mr-4">&nbsp;@Html.ActionLink("Keyboard", "GetInstrumentsByType", "Instruments", new { type = "Keyboard" }, new { @style = "text-decoration:none", @class = "text-white " })</li>
+            <li id="uniqueid" class="nav-item mr-4">&nbsp;@Html.ActionLink("Percussion", "GetInstrumentsByType", "Instruments", new { type = "Percussion" }, new { @style = "text-decoration:none", @class = "text-white " })</li>
 
         </ul>
+
+
         @Html.Partial("_LoginPartial")
     </nav>
+
     @*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="col-md-2">
@@ -57,17 +86,18 @@
             @Html.Partial("_LoginPartial")
         </div>*@
     <div>
-        <div class="container body-content" style="background-image:url('../../Images/background.jpg');background-size:cover">
+        <div class="container body-content">
             @RenderBody()
 
-            <footer style="text-align:center;color:cornflowerblue">
-                <p>&copy; @DateTime.Now.Year - Strings'n'Things</p>
-
-                <i class=" fa fa-facebook">   </i>
-                <i class="fa fa-twitter">   </i>
-                <i class="fa fa-google-plus">   </i>
-                <i class="fa fa-pinterest">   </i>
-                <i class="fa fa-youtube">   </i>
+            <footer style="text-align:center; color:cornflowerblue; font-size:20px">
+                <p class="bg-white">&copy; @DateTime.Now.Year - Strings'n'Things</p>
+                <p class="bg-white">
+                    <i class=" fa fa-facebook">   </i>
+                    <i class="fa fa-twitter">   </i>
+                    <i class="fa fa-google-plus">   </i>
+                    <i class="fa fa-pinterest">   </i>
+                    <i class="fa fa-youtube">   </i>
+                </p>
 
             </footer>
 
